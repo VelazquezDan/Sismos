@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include "informacion_sismos.html" %}
+    
+    {% if show_resumen %}
+        {% include "resumen.html" %}
+    {% endif %}
+    
+    <div class="container-fluid mt-4">
+        <h2 class="text-center mb-4">Visualización de Datos Sísmicos</h2>
+        
+        {% if año_inicio and año_fin %}
+        <div class="alert alert-info">
+            Mostrando datos del período: {{ año_inicio }} - {{ año_fin }}
+        </div>
+        {% endif %}
+        
+        <!-- Gráficas con contenedores responsive -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Distribución de Magnitudes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height:400px">
+                            {{ graficas.histograma|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Serie Temporal de Sismos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height:400px">
+                            {{ graficas.serie_temporal|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mapa con contenedor más grande -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Mapa de Sismos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="map-container" style="height:600px; width:100%">
+                            {{ graficas.mapa|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% if graficas.comparativa %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Comparativa Anual</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height:400px">
+                            {{ graficas.comparativa|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="text-center mt-4 mb-5">
+            <a href="/" class="btn btn-primary btn-lg">Analizar otro conjunto de datos</a>
+        </div>
+    </div>
+{% endblock %}

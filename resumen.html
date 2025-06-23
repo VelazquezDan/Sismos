@@ -1,0 +1,99 @@
+<div class="container resumen-container">
+    <h2 class="text-center mb-4">Resumen Sísmico</h2>
+    
+    <div class="resumen-card">
+        <h3>📊 Estadísticas Clave</h3>
+        <p>Total de sismos registrados: <strong>{{ stats.total_sismos }}</strong></p>
+        <p>Período analizado: <strong>{{ stats.periodo }}</strong></p>
+        <p>Magnitud máxima registrada: <strong>{{ stats.magnitud_maxima }}</strong></p>
+        <p>Último sismo: 
+            <strong>{{ stats.ultimo_sismo.fecha }}</strong> (M {{ stats.ultimo_sismo.magnitud }})
+            {% if stats.ultimo_sismo.ubicacion != "No disponible" %}
+                en {{ stats.ultimo_sismo.ubicacion }}
+            {% endif %}
+        </p>
+    </div>
+    
+    {% if stats.predicciones %}
+    <div class="resumen-card">
+        <h3>🔮 Tendencia y Predicciones</h3>
+        <p>La frecuencia de sismos está <strong>{{ stats.predicciones.tendencia }}</strong></p>
+        <p>Predicciones para próximos años:</p>
+        <ul>
+            {% for año, pred in stats.predicciones.predicciones.items() %}
+            <li>{{ año }}: ~{{ pred }} sismos estimados</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    {% if stats.patrones_temporales %}
+    <div class="resumen-card">
+        <h3>⏱ Patrones Temporales</h3>
+        <p>Meses con más actividad: 
+            <strong>{{ stats.patrones_temporales.meses_mas_sismos|join(', ') }}</strong>
+        </p>
+        <p>Horas más activas: 
+            <strong>{{ stats.patrones_temporales.horas_mas_sismos|join(':00, ') }}:00</strong>
+        </p>
+        <p>Porcentaje de sismos nocturnos: 
+            <strong>{{ stats.patrones_temporales.sismos_noche|round(1) }}%</strong>
+        </p>
+    </div>
+    {% endif %}
+    
+    {% if 'profundidad_promedio' in stats %}
+    <div class="resumen-card">
+        <h3>⏳ Análisis de Profundidad</h3>
+        <p>Profundidad promedio: <strong>{{ stats.profundidad_promedio }} km</strong></p>
+        <p>Sismos superficiales (&lt;30 km): 
+            <strong>{{ stats.sismos_superficiales|round(1) }}%</strong> del total
+        </p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.resumen-container {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    padding: 20px;
+}
+
+.resumen-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-left: 4px solid #dc3545;
+}
+
+.resumen-card h3 {
+    color: #dc3545;
+    margin-top: 0;
+}
+
+.resumen-card p {
+    margin-bottom: 8px;
+}
+
+.resumen-card ul {
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.resumen-card li {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .resumen-container {
+        padding: 10px;
+    }
+    
+    .resumen-card {
+        padding: 15px;
+    }
+}
+</style>

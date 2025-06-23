@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="upload-container">
+        <h1 class="text-center mb-4">Análisis de Datos Sísmicos</h1>
+        
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">Seleccione archivo CSV:</label>
+                <input class="form-control" type="file" id="file" name="file" accept=".csv" required>
+                <div class="form-text">El archivo debe contener columnas: Fecha, Hora, Magnitud, Latitud, Longitud</div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="año_inicio" class="form-label">Año de inicio (opcional):</label>
+                    <input type="number" class="form-control" id="año_inicio" name="año_inicio" min="1900" max="{{ current_year }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="año_fin" class="form-label">Año final (opcional):</label>
+                    <input type="number" class="form-control" id="año_fin" name="año_fin" min="1900" max="{{ current_year }}">
+                </div>
+            </div>
+            
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Analizar Datos</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.upload-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: white;
+}
+.error-message {
+    color: #dc3545;
+    margin-top: 10px;
+}
+</style>
+{% endblock %}
