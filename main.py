@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 # URL del archivo CSV en GitHub (asegúrate de usar la URL raw)
-CSV_URL = "https://raw.githubusercontent.com/tu_usuario/tu_repositorio/main/datos_sismos.csv"
+CSV_URL = "https://raw.githubusercontent.com/VelazquezDan/Sismos/refs/heads/main/datos.csv"
 
 # Título de la aplicación
 st.title("🌍 Análisis de Sismos en México")
